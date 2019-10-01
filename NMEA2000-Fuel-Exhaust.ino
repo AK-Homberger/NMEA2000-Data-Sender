@@ -37,7 +37,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 // Pass our oneWire reference to Dallas Temperature. 
 DallasTemperature sensors(&oneWire);
 
-// Currently not really needed, we ony send one message type (Engine)
+// Send time offsets
 #define TempSendOffset 0
 #define TankSendOffset 40
 #define SlowDataUpdatePeriod 1000  // Time between CAN Messages sent
