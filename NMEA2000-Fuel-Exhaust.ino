@@ -63,7 +63,6 @@ void debug_log(char* str) {
 
     
 void setup() {
-
    uint8_t chipid[6];
    char ID[10]="01";
    
