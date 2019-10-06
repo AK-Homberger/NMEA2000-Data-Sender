@@ -22,7 +22,7 @@
 
 #define ENABLE_DEBUG_LOG 0 // Debug log
 
-#define ADC_Calibration_Value 250.0 // For resitor measure 5 Volt and 180 Ohm 100% plus IK resitor.
+#define ADC_Calibration_Value 250.0 // For resitor measure 5 Volt and 180 Ohm 100% plus 1K resitor.
 
 
 // Set the information for other bus devices, which messages we support
