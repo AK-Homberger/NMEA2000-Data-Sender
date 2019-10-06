@@ -3,8 +3,9 @@ This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust 
 
 ![Prototype](https://github.com/AK-Homberger/NMEA2000-Fuel-and-Exhaust-Temperature-Sender/blob/master/NMEA2000%20Interface.png)
 
-Version 0.2, 06.10.2019: Added Engine RPM.
-Version 0.1, 30.09.2019: Initial version.
+# Version 0.2, 06.10.2019: Added Engine RPM.
+
+# Version 0.1, 30.09.2019: Initial version.
 
 The code is based on the NMEA 2000 library from Timo Lappalainen (https://github.com/ttlappalainen/NMEA2000).
 
@@ -20,9 +21,11 @@ You have to define the correct GPIO ports in the header files for the NMEA2000 l
 - The Engine RPM is measured on connction "W" of the generator.
 
 The Engine RPM is measured with a PC900V optocoupler device (http://www.simandl.cz/stranky/elektro/fastsci/soubory/pc900v.pdf)
-This device plus the 2K rsistor and the 1N4007 diode) translates the signal from "W" connction o generator to ESP32 pin 23.
-Ther is a RPM difference between generator and diesel engine. The calibration value has to be set in the program.
+This device plus the 2K resistor and the 1N4007 diode) translates the signal from "W" connction o generator to ESP32 pin 23.
+There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
 
+12 Volt is transformed to 5 Volt with a step-down converter (D24V10F5 , https://www.pololu.com/product/2831)
+CAN bus transceiver is a SN65HVD230, https://www.waveshare.com/wiki/SN65HVD230_CAN_Board)
 
 Further updates will follow.
 
