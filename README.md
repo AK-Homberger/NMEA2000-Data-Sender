@@ -1,7 +1,7 @@
 # NMEA2000 Engine RPM, Fuel Level and Exhaust Temp Sender
 This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust Temeperature and send it as NNMEA2000 meassage.
 
-![Prototype](https://github.com/AK-Homberger/NMEA2000-Fuel-and-Exhaust-Temperature-Sender/blob/master/NMEA2000%20Interface2.png)
+![Prototype](https://github.com/AK-Homberger/NMEA2000-Fuel-and-Exhaust-Temperature-Sender/blob/master/NMEA2000%20Interface3.png)
 # Version 0.2, 06.10.2019: Added Engine RPM.
 
 # Version 0.1, 30.09.2019: Initial version.
