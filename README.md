@@ -13,6 +13,9 @@ The ESP32 in this project is an ESP32 NODE MCU from AzDelivery. Pin layout for o
 For the ESP32 CAN bus, I used the "Waveshare SN65HVD230 Can Board" as transceiver. It works well with the ESP32.
 You have to define the correct GPIO ports in the header files for the NMEA2000 library (see documentation). For this project, I use the pins GPIO4 for CAN RX and GPIO2 for CAN TX. 
 
+- The 12 Volt is reduced with a DC Step-Down_Converter (D24V10F5, https://www.pololu.com/product/2831).
+
+
 - The Exhaust Temperature is measured with a DS18B20 Sensor.
 
 
