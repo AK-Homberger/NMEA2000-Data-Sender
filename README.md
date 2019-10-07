@@ -19,7 +19,7 @@ You have to define the correct GPIO ports in the header files for the NMEA2000 l
 - The Fuel Level is measured with TGT 200 device from manufacturer Philippi (https://www.philippi-online.de/en/products/supervision/tank-sensors.html). The resistor value from 0 tp 180 Ohm is measured with 1K resistor in row and translated to percent. The ADC value has to be calibrated in the code.
 
 
-- The Engine RPM is measured on connection "W" of the generator. The Engine RPM is measured with a PC900V optocoupler device (http://www.simandl.cz/stranky/elektro/fastsci/soubory/pc900v.pdf).
+- The Engine RPM is measured on connection "W" of the generator/alternator. The Engine RPM is detected with a PC900V optocoupler device (http://www.simandl.cz/stranky/elektro/fastsci/soubory/pc900v.pdf).
 This device plus the 2K resistor and the 1N4007 diode) translates the signal from "W" connction of generator to ESP32 pin 23. The diode is not critical an can be replaced with nearly any another type (e.g. 1N4148).
 There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
 
