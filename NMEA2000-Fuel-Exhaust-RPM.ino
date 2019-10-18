@@ -12,7 +12,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Version 0.2, 06.10.2019, AK-Homberger
+// Version 0.3, 18.10.2019, AK-Homberger
 
 #include <Arduino.h>
 #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
@@ -22,7 +22,7 @@
 
 #define ENABLE_DEBUG_LOG 0 // Debug log
 
-#define ADC_Calibration_Value 250.0 // For resitor measure 5 Volt and 180 Ohm 100% plus 1K resistor.
+#define ADC_Calibration_Value 250.0 // For resistor measure 5 Volt and 180 Ohm equals 100% plus 1K resistor.
 
 
 // Set the information for other bus devices, which messages we support
@@ -99,7 +99,8 @@ void IRAM_ATTR handleInterrupt()
 void setup() {
 
   uint8_t chipid[6];
-  char ID[10] = "01";
+  uint32_t id =0;
+  int i=0;  
 
   // Init USB serial port
   Serial.begin(115200);
@@ -125,18 +126,17 @@ void setup() {
   NMEA2000.SetN2kCANSendFrameBufSize(250);
 
   esp_efuse_read_mac(chipid);
-  snprintf(ID, sizeof(ID), "%X", chipid);
-
+  for (i=0;i<6;i++) id += (chipid[i]<<(7*i));
 
   // Set product information
-  NMEA2000.SetProductInformation(ID, // Manufacturer's Model serial code
+  NMEA2000.SetProductInformation("1", // Manufacturer's Model serial code
                                  100, // Manufacturer's product code
                                  "My Sensor Module",  // Manufacturer's Model ID
                                  "1.0.2.25 (2019-07-07)",  // Manufacturer's Software version code
                                  "1.0.2.0 (2019-07-07)" // Manufacturer's Model version
                                 );
   // Set device information
-  NMEA2000.SetDeviceInformation(1, // Unique number. Use e.g. Serial number.
+  NMEA2000.SetDeviceInformation(id, // Unique number. Use e.g. Serial number.
                                 132, // Device function=Analog to NMEA 2000 Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
                                 25, // Device class=Inter/Intranetwork Device. See codes on  http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
                                 2046 // Just choosen free from code list on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
