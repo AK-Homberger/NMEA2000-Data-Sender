@@ -2,9 +2,6 @@
 This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust Temeperature and send it as NNMEA2000 meassage.
 
 ![Prototype](https://github.com/AK-Homberger/NMEA2000-Fuel-and-Exhaust-Temperature-Sender/blob/master/NMEA2000%20Interface3.png)
-# Version 0.2, 06.10.2019: Added Engine RPM.
-
-# Version 0.1, 30.09.2019: Initial version.
 
 The code is based on the NMEA 2000 library from Timo Lappalainen (https://github.com/ttlappalainen/NMEA2000).
 
@@ -26,6 +23,8 @@ You have to define the correct GPIO ports in the header files for the NMEA2000 l
 This device plus the 2K resistor and the 1N4007 diode) translates the signal from "W" connction of generator to ESP32 pin 23. The diode is not critical an can be replaced with nearly any another type (e.g. 1N4148).
 There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
 
+Version 0.3, 18.10.2019: Improved Chip ID calculation.
 
-Further updates will follow.
+Version 0.2, 06.10.2019: Added Engine RPM.
 
+Version 0.1, 30.09.2019: Initial version.
