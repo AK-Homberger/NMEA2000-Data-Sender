@@ -12,7 +12,10 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Version 0.3, 18.10.2019, AK-Homberger
+// Version 0.4, 11.12.2019, AK-Homberger
+
+#define ESP32_CAN_TX_PIN GPIO_NUM_2  // Set CAN TX port to 2 
+#define ESP32_CAN_RX_PIN GPIO_NUM_4  // Set CAN RX port to 4
 
 #include <Arduino.h>
 #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
