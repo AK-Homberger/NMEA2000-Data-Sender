@@ -3,7 +3,7 @@ This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust 
 
 ![Prototype](https://github.com/AK-Homberger/NMEA2000-Fuel-and-Exhaust-Temperature-Sender/blob/master/NMEA2000%20Interface3.png)
 
-The code is based on the NMEA 2000 library from Timo Lappalainen (https://github.com/ttlappalainen/NMEA2000).
+The code is based on the NMEA 2000 library from Timo Lappalainen (https://github.com/ttlappalainen/NMEA2000). This library has to be downloaded and installed.
 
 The ESP32 in this project is an ESP32 NODE MCU from AzDelivery. Pin layout for other ESP32 devices might differ.
 
@@ -13,7 +13,7 @@ You have to define the correct GPIO ports in the header files for the NMEA2000 l
 - The 12 Volt is reduced with a DC Step-Down_Converter (D24V10F5, https://www.pololu.com/product/2831).
 
 
-- The Exhaust Temperature is measured with a DS18B20 Sensor.
+- The Exhaust Temperature is measured with a DS18B20 Sensor (the DallasTemperature library has to be installed).
 
 
 - The Fuel Level is measured with TGT 200 device from manufacturer Philippi (https://www.philippi-online.de/en/products/supervision/tank-sensors.html). The resistor value from 0 tp 180 Ohm is measured with 1K resistor in row and translated to percent. The ADC value has to be calibrated in the code.
