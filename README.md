@@ -1,7 +1,9 @@
 # NMEA2000 Engine RPM, Fuel Level and Exhaust Temp Sender
 This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust Temeperature and send it as NNMEA2000 meassage.
 
-![Prototype](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA%202000%20DataSender.png)
+![Picture](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA%202000%20DataSender.png)
+
+Here is KiCad schematics as PDF ![Schematics PDF](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA2000DataSender.pdf)
 
 The code is based on the NMEA 2000 library from Timo Lappalainen (https://github.com/ttlappalainen/NMEA2000). This library has to be downloaded and installed.
 
@@ -20,7 +22,7 @@ You have to define the correct GPIO ports in the header files for the NMEA2000 l
 
 
 - The Engine RPM is measured on connection "W" of the generator/alternator. The Engine RPM is detected with a PC900V optocoupler device (http://www.simandl.cz/stranky/elektro/fastsci/soubory/pc900v.pdf).
-This device plus the 2K resistor and the 1N4007 diode) translates the signal from "W" connction of generator to ESP32 pin 23. The diode is not critical an can be replaced with nearly any another type (e.g. 1N4148).
+This device plus the 2K resistor and the 1N4148 diode) translates the signal from "W" connction of generator to ESP32 pin 23. The diode is not critical an can be replaced with nearly any another type.
 There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
 
 Version 0.3, 18.10.2019: Improved Chip ID calculation.
