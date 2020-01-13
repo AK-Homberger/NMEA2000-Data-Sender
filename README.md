@@ -13,7 +13,7 @@ The ESP32 in this project is an ESP32 NODE MCU from AzDelivery. Pin layout for o
 For the ESP32 CAN bus, I used the "Waveshare SN65HVD230 Can Board" as transceiver. It works well with the ESP32.
 The correct GPIO ports are defined in the main sketch. For this project, I use the pins GPIO4 for CAN RX and GPIO2 for CAN TX. 
 
-- The 12 Volt is reduced with a DC Step-Down_Converter (D24V10F5, https://www.pololu.com/product/2831).
+- The 12 Volt is reduced to 5 Volt with a DC Step-Down_Converter (D24V10F5, https://www.pololu.com/product/2831).
 
 
 - The Exhaust Temperature is measured with a DS18B20 Sensor (the DallasTemperature library has to be installed with the Arduiono IDE Library Manager).
