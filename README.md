@@ -26,7 +26,7 @@ There is a RPM difference between generator and diesel engine RPM. The calibrati
 
 - The Battery Voltage is measured at GPIO pin 35 (check calibration value with regards to the real resitor values of R4/R5).
 
-The following PGNs are send to the NMEA 2000 Bus:
+The following PGNs are sent to the NMEA 2000 Bus:
 - 127505 Fluid Level
 - 130312 Temperature
 - 127488 Engine Rapid / RPM
