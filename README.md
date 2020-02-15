@@ -14,7 +14,7 @@ The correct GPIO ports are defined in the main sketch. For this project, I use t
 
 The 12 Volt is reduced to 5 Volt with a DC Step-Down_Converter (D24V10F5, https://www.pololu.com/product/2831).
 
-The following values are measured and transmited to the NME2000 bus:
+The following values are measured and transmitted to the NMEA2000 bus:
 
 - The Exhaust Temperature is measured with a DS18B20 Sensor (the DallasTemperature library has to be installed with the Arduiono IDE Library Manager).
 
