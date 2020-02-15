@@ -1,7 +1,7 @@
 # NMEA2000 Engine RPM, Fuel Level and Exhaust Temp Sender
 This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust Temeperature and send it as NNMEA2000 meassage.
 
-![Picture](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA%202000%20DataSender.png)
+![Picture](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA2000%20DataSender.png)
 
 Here is a KiCad schematics as PDF ![Schematics](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA2000DataSender.pdf)
 
