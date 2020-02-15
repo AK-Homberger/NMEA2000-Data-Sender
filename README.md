@@ -32,9 +32,10 @@ Tho following PGNs are send to the NMEA 2000 Bus:
 - 127488 Engine Rapid / RPM
 - 127508 Battery Status
 
-Chane the PGNs isf your MFD can not show a certain PGN.
+Change the PGNs isf your MFD can not show a certain PGN.
 
-Updates:
+
+# Updates:
 
 Version 0.5, 15.02.2020: Added Battery Voltage.
 
