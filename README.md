@@ -26,6 +26,14 @@ The correct GPIO ports are defined in the main sketch. For this project, I use t
 - The Engine RPM is measured on connection "W" of the generator/alternator. The Engine RPM is detected with a H11L1 optocoupler device (or alternatively a PC900v). This device plus the 2K resistor and the 1N4148 diode) translates the signal from "W" connection of the generator to ESP32 pin 23. The diode is not critical an can be replaced with nearly any another type.
 There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
 
+Tho following PGNs are send to the NMEA 2000 Bus:
+- 127505 Fluid Level
+- 130312 Temperature
+- 127488 Engine Rapid / RPM
+- 127508 Battery Status
+
+Chane the PGNs isf your MFD can not show a certain PGN.
+
 Updates:
 
 Version 0.5, 15.02.2020: Added Battery Voltage.
