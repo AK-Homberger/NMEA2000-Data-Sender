@@ -1,9 +1,8 @@
-# NMEA2000 Engine RPM, Fuel Level and Exhaust Temp Sender
-This repository shows how to measure the Engine RPM, Fuel Level and the Exhaust Temeperature and send it as NNMEA2000 meassage.
+# NMEA2000 Battery Voltage, Engine RPM, Fuel Level and Exhaust Temp Sender
+This repository shows how to measure the Battery Voltage, Engine RPM, Fuel Level and the Exhaust Temeperature and send it as NNMEA2000 meassage.
 
 ![Picture](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA2000%20DataSender.png)
 
-Here is a KiCad schematics as PDF ![Schematics](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA2000DataSender.pdf)
 
 The project requires the NMEA2000 and the NMEA2000_esp32 libraries from Timo Lappalainen: https://github.com/ttlappalainen
 Both libraries have to be downloaded and installed.
@@ -21,9 +20,15 @@ The correct GPIO ports are defined in the main sketch. For this project, I use t
 
 - The Fuel Level is measured with TGT 200 device from manufacturer Philippi (https://www.philippi-online.de/en/products/supervision/tank-sensors.html). The resistor value from 5 tp 180 Ohm is measured with 1K resistor in row and translated to percent. The ADC value has to be calibrated in the code.
 
+- Tha Battery Voltage is measuer at GPIO pin 35 (check kalobration value with regards to the real resitor values for (R4/R5).
+
 
 - The Engine RPM is measured on connection "W" of the generator/alternator. The Engine RPM is detected with a H11L1 optocoupler device (or alternatively a PC900v). This device plus the 2K resistor and the 1N4148 diode) translates the signal from "W" connection of the generator to ESP32 pin 23. The diode is not critical an can be replaced with nearly any another type.
 There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
+
+Updates:
+
+Version 0.5, 15.02.2020: Added Battery Voltage.
 
 Version 0.4, 14.12.2019: Added CAN pin definition in sketch.
 
