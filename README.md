@@ -24,7 +24,7 @@ The following values are measured and transmitted to the NMEA2000 bus:
 - The Engine RPM is measured on connection "W" of the generator/alternator. The Engine RPM is detected with a H11L1 optocoupler device (or alternatively a PC900v). This device plus the 2K resistor and the 1N4148 diode) translates the signal from "W" connection of the generator to ESP32 GPIO pin 23. The diode is not critical an can be replaced with nearly any another type.
 There is a RPM difference between generator and diesel engine RPM. The calibration value has to be set in the program.
 
-- The Battery Voltage is measured at GPIO pin 35 (check calibration value with regards to the real resitor values of R4/R5).
+- The Battery Voltage is measured at GPIO pin 35 (check calibration value with regards to the real resistor values of R4/R5).
 
 The following PGNs are sent to the NMEA 2000 Bus:
 - 127505 Fluid Level
