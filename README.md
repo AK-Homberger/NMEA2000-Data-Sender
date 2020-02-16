@@ -4,7 +4,7 @@ This repository shows how to measure the Battery Voltage, Engine RPM, Fuel Level
 ![Picture](https://github.com/AK-Homberger/NMEA2000-Data-Sender/blob/master/NMEA2000%20DataSender.png)
 
 
-The project requires the NMEA2000 and the NMEA2000_esp32 libraries from Timo Lappalainen: https://github.com/ttlappalainen
+The project requires the NMEA2000 and the NMEA2000_esp32 libraries from Timo Lappalainen: https://github.com/ttlappalainen.
 Both libraries have to be downloaded and installed.
 
 The ESP32 in this project is an ESP32 NODE MCU from AzDelivery. Pin layout for other ESP32 devices might differ.
