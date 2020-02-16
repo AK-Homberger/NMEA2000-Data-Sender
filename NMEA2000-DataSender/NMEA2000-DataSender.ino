@@ -28,7 +28,7 @@
 
 // Set the information for other bus devices, which messages we support
 const unsigned long TransmitMessages[] PROGMEM = {127505L, // Fluid Level
-                                                  130312L, // Temperature
+                                                  130311L, // Temperature  (or alternatively 130312L or 130316L)
                                                   127488L, // Engine Rapid / RPM
                                                   127508L, // Battery Status
                                                   0
@@ -253,15 +253,15 @@ void SendN2kExhaustTemp(double temp) {
 
     Serial.printf("Exhaust Temp: %3.0f °C \n", temp);
 
+    // Select the right PGN for your MFD and set the PGN value also in "TransmitMessages[]"
+    
     SetN2kEnvironmentalParameters(N2kMsg, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp),           // PGN130311, uncomment the PGN to be used 
                      N2khs_Undef, N2kDoubleNA, N2kDoubleNA);
     
+    // SetN2kTemperature(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp), N2kDoubleNA);   // PGN130312, uncomment the PGN to be used
+     
     // SetN2kTemperatureExt(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature,CToKelvin(temp), N2kDoubleNA); // PGN130316, uncomment the PGN to be used 
 
-    
-    // SetN2kTemperature(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp), N2kDoubleNA);   // PGN130312, uncomment the PGN to be used
-    
-    
     NMEA2000.SendMsg(N2kMsg);
   }
 }
