@@ -12,7 +12,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Version 0.4, 15.02.2020, AK-Homberger
+// Version 0.5, 15.02.2020, AK-Homberger
 
 #include <Arduino.h>
 #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
@@ -222,7 +222,7 @@ void SendN2kBattery(double BatteryVoltage) {
     Serial.printf("Voltage     : %3.0f ", BatteryVoltage);
     Serial.println("%");
 
-    SetN2kDCBatStatus(N2kMsg, 1, BatteryVoltage, N2kDoubleNA, N2kDoubleNA, 1);
+    SetN2kDCBatStatus(N2kMsg, 0, BatteryVoltage, N2kDoubleNA, N2kDoubleNA, 1);
     NMEA2000.SendMsg(N2kMsg);
   }
 }
@@ -253,7 +253,15 @@ void SendN2kExhaustTemp(double temp) {
 
     Serial.printf("Exhaust Temp: %3.0f °C \n", temp);
 
-    SetN2kTemperature(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp), N2kDoubleNA);
+    SetN2kEnvironmentalParameters(N2kMsg, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp),           // PGN130311, uncomment the PGN to be used 
+                     N2khs_Undef, N2kDoubleNA, N2kDoubleNA);
+    
+    // SetN2kTemperatureExt(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature,CToKelvin(temp), N2kDoubleNA); // PGN130316, uncomment the PGN to be used 
+
+    
+    // SetN2kTemperature(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp), N2kDoubleNA);   // PGN130312, uncomment the PGN to be used
+    
+    
     NMEA2000.SendMsg(N2kMsg);
   }
 }
