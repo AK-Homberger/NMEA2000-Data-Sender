@@ -38,7 +38,7 @@ BTW: The full list of PGNs is defined in this header file of the NMEA 2000 libra
 
 # Updates:
 
-Version 0.5, 15.02.2020: Added Battery Voltage.
+Version 0.5, 15.02.2020: Added Battery Voltage and optional temperature PGNs.
 
 Version 0.4, 14.12.2019: Added CAN pin definition in sketch.
 
