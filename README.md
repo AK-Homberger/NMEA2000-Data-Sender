@@ -28,7 +28,7 @@ There is a RPM difference between generator and diesel engine RPM. The calibrati
 
 The following PGNs are sent to the NMEA 2000 Bus:
 - 127505 Fluid Level
-- 130312 Temperature
+- 130311 Temperature (ore alternatively 130312 or 130316)
 - 127488 Engine Rapid / RPM
 - 127508 Battery Status
 
