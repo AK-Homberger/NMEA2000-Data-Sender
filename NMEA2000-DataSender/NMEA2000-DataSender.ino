@@ -12,9 +12,13 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Version 0.5, 15.02.2020, AK-Homberger
+// Version 0.6, 04.08.2020, AK-Homberger
+
+#define ESP32_CAN_TX_PIN GPIO_NUM_5  // Set CAN TX port to 5 
+#define ESP32_CAN_RX_PIN GPIO_NUM_4  // Set CAN RX port to 4
 
 #include <Arduino.h>
+#include <Preferences.h>
 #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
 #include <memory>
 #include <N2kMessages.h>
@@ -25,6 +29,9 @@
 #define ADC_Calibration_Value1 250.0 // For resistor measure 5 Volt and 180 Ohm equals 100% plus 1K resistor.
 #define ADC_Calibration_Value2 34.3  // The real value depends on the true resistor values for the ADC input (100K / 27 K).
 
+int NodeAddress;  // To store last Node Address
+
+Preferences preferences;             // Nonvolatile storage on ESP32 - To store LastDeviceAddress
 
 // Set the information for other bus devices, which messages we support
 const unsigned long TransmitMessages[] PROGMEM = {127505L, // Fluid Level
@@ -70,11 +77,11 @@ const int ADCpin2 = 35;
 // Tank fluid level measure is connected GPIO 34 (Analog ADC1_CH6)
 const int ADCpin1 = 34;
 
-// Global Data 
+// Global Data
 float FuelLevel = 0;
 float ExhaustTemp = 0;
 float EngineRPM = 0;
-float BatteryVolt =0;
+float BatteryVolt = 0;
 
 // Task handle for OneWire read (Core 0 on ESP32)
 TaskHandle_t Task1;
@@ -107,8 +114,8 @@ void IRAM_ATTR handleInterrupt()
 void setup() {
 
   uint8_t chipid[6];
-  uint32_t id =0;
-  int i=0;  
+  uint32_t id = 0;
+  int i = 0;
 
   // Init USB serial port
   Serial.begin(115200);
@@ -134,7 +141,7 @@ void setup() {
   NMEA2000.SetN2kCANSendFrameBufSize(250);
 
   esp_efuse_read_mac(chipid);
-  for (i=0;i<6;i++) id += (chipid[i]<<(7*i));
+  for (i = 0; i < 6; i++) id += (chipid[i] << (7 * i));
 
   // Set product information
   NMEA2000.SetProductInformation("1", // Manufacturer's Model serial code
@@ -153,7 +160,13 @@ void setup() {
   // If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below
 
   NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text. Leave uncommented for default Actisense format.
-  NMEA2000.SetMode(tNMEA2000::N2km_ListenAndNode, 32);
+
+  preferences.begin("nvs", false);                          // Open nonvolatile storage (nvs)
+  NodeAddress = preferences.getInt("LastNodeAddress", 33);  // Read stored last NodeAddress, default 33
+  preferences.end();
+  Serial.printf("NodeAddress=%d\n", NodeAddress);
+
+  NMEA2000.SetMode(tNMEA2000::N2km_ListenAndNode, NodeAddress);
 
   NMEA2000.ExtendTransmitMessages(TransmitMessages);
 
@@ -165,7 +178,7 @@ void setup() {
     "Task1", /* Name of the task */
     10000,  /* Stack size in words */
     NULL,  /* Task input parameter */
-    2,  /* Priority of the task */
+    0,  /* Priority of the task */
     &Task1,  /* Task handle. */
     0); /* Core where the task should run */
 
@@ -177,9 +190,10 @@ void GetTemperature( void * parameter) {
   float tmp = 0;
   for (;;) {
     sensors.requestTemperatures(); // Send the command to get temperatures
+    vTaskDelay(100);
     tmp = sensors.getTempCByIndex(0);
     if (tmp != -127) ExhaustTemp = tmp;
-    delay(200);
+    vTaskDelay(100);
   }
 }
 
@@ -187,13 +201,13 @@ void GetTemperature( void * parameter) {
 // Calculate engine RPM from number of interupts per time
 
 double ReadRPM() {
-  double RPM=0;
+  double RPM = 0;
 
   portENTER_CRITICAL(&mux);
   RPM = 1000000.00 / PeriodCount;                    // PeriodCount in 0.000001 of a second
   portEXIT_CRITICAL(&mux);
   if (millis() > Last_int_time + 200) RPM = 0;       // No signals RPM=0;
-  return(RPM);
+  return (RPM);
 }
 
 
@@ -254,13 +268,13 @@ void SendN2kExhaustTemp(double temp) {
     Serial.printf("Exhaust Temp: %3.0f °C \n", temp);
 
     // Select the right PGN for your MFD and set the PGN value also in "TransmitMessages[]"
-    
-    SetN2kEnvironmentalParameters(N2kMsg, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp),           // PGN130311, uncomment the PGN to be used 
-                     N2khs_Undef, N2kDoubleNA, N2kDoubleNA);
-    
+
+    SetN2kEnvironmentalParameters(N2kMsg, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp),           // PGN130311, uncomment the PGN to be used
+                                  N2khs_Undef, N2kDoubleNA, N2kDoubleNA);
+
     // SetN2kTemperature(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature, CToKelvin(temp), N2kDoubleNA);   // PGN130312, uncomment the PGN to be used
-     
-    // SetN2kTemperatureExt(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature,CToKelvin(temp), N2kDoubleNA); // PGN130316, uncomment the PGN to be used 
+
+    // SetN2kTemperatureExt(N2kMsg, 0, 0, N2kts_ExhaustGasTemperature,CToKelvin(temp), N2kDoubleNA); // PGN130316, uncomment the PGN to be used
 
     NMEA2000.SendMsg(N2kMsg);
   }
@@ -277,7 +291,7 @@ void SendN2kEngineRPM(double RPM) {
     Serial.printf("Engine RPM  :%4.0f RPM \n", RPM);
 
     SetN2kEngineParamRapid(N2kMsg, 0, RPM, N2kDoubleNA, N2kInt8NA);
-     
+
     NMEA2000.SendMsg(N2kMsg);
   }
 }
@@ -298,9 +312,9 @@ void loop() {
   unsigned int size;
 
   BatteryVolt = ((BatteryVolt * 15) + (ReadVoltage(ADCpin2) * ADC_Calibration_Value2 / 4096)) / 16; // This implements a low pass filter to eliminate spike for ADC readings
-  
+
   FuelLevel = ((FuelLevel * 15) + (ReadVoltage(ADCpin1) * ADC_Calibration_Value1 / 4096)) / 16; // This implements a low pass filter to eliminate spike for ADC readings
-   
+
   EngineRPM = ((EngineRPM * 5) + ReadRPM() * RPM_Calibration_Value) / 6 ; // This implements a low pass filter to eliminate spike for RPM measurements
 
 
@@ -311,7 +325,14 @@ void loop() {
   SendN2kEngineRPM(EngineRPM);
   SendN2kBattery (BatteryVolt);
 
-  delay(50);
+  NMEA2000.ParseMessages();
+  int SourceAddress = NMEA2000.GetN2kSource();
+  if (SourceAddress != NodeAddress) { // Save potentially changed Source Address to NVS memory
+    preferences.begin("nvs", false);
+    preferences.putInt("LastNodeAddress", SourceAddress);
+    preferences.end();
+    Serial.printf("Address Change: New Address=%d\n", SourceAddress);
+  }
 
   // Dummy to empty input buffer to avoid board to stuck with e.g. NMEA Reader
   if ( Serial.available() ) {
