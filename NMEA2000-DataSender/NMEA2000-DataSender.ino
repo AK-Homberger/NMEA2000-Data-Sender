@@ -46,7 +46,7 @@ const unsigned long TransmitMessages[] PROGMEM = {127505L, // Fluid Level
 
 #define RPM_Calibration_Value 1.0 // Translates Generator RPM to Engine RPM 
 
-#define Eingine_RPM_Pin 33  // Engine RPM is measured as interrupt on pin 33
+#define Eingine_RPM_Pin 33  // Engine RPM is measured as interrupt on GPIO pin 33
 
 volatile uint64_t StartValue;                     // First interrupt value
 volatile uint64_t PeriodCount;                    // period in counts of 0.000001 of a second
