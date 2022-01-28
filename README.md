@@ -60,6 +60,8 @@ It then looks like the picture. Then measure to be on the safe side. Without a 1
 
 # Updates:
 
+Version 0.7, 28.01.2022: Avoid division by 0 if no signals for RPM are measured.
+
 Version 0.6, 04.08.2020: Changed TX pin from 2 to 5. Store/restore NodeAddress. Lower task priority (GetTemperature()).
 
 Version 0.5, 15.02.2020: Added Battery Voltage and optional temperature PGNs.
