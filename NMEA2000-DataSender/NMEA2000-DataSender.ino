@@ -12,7 +12,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Version 0.6, 04.08.2020, AK-Homberger
+// Version 0.7, 28.01.2022, AK-Homberger
 
 #define ESP32_CAN_TX_PIN GPIO_NUM_5  // Set CAN TX port to 5 
 #define ESP32_CAN_RX_PIN GPIO_NUM_4  // Set CAN RX port to 4
@@ -48,8 +48,8 @@ const unsigned long TransmitMessages[] PROGMEM = {127505L, // Fluid Level
 
 #define Eingine_RPM_Pin 33  // Engine RPM is measured as interrupt on GPIO 33
 
-volatile uint64_t StartValue;                     // First interrupt value
-volatile uint64_t PeriodCount;                    // period in counts of 0.000001 of a second
+volatile uint64_t StartValue = 0;                  // First interrupt value
+volatile uint64_t PeriodCount = 0;                // period in counts of 0.000001 of a second
 unsigned long Last_int_time = 0;
 hw_timer_t * timer = NULL;                        // pointer to a variable of type hw_timer_t
 portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;  // synchs between maon cose and interrupt?
@@ -204,13 +204,13 @@ double ReadRPM() {
   double RPM = 0;
 
   portENTER_CRITICAL(&mux);
-  RPM = 1000000.00 / PeriodCount;                    // PeriodCount in 0.000001 of a second
+  if (PeriodCount != 0) {                            // 0 means no signals measured
+    RPM = 1000000.00 / PeriodCount;                  // PeriodCount in 0.000001 of a second  
+  }  
   portEXIT_CRITICAL(&mux);
   if (millis() > Last_int_time + 200) RPM = 0;       // No signals RPM=0;
   return (RPM);
 }
-
-
 
 
 bool IsTimeToUpdate(unsigned long NextUpdate) {
